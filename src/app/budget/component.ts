@@ -31,7 +31,7 @@ export class BudgetComponent {
     private id: string = '0a22b2e4-ce9f-4341-8580-b65e80b1a92d';
     addForm: FormGroup;
 
-    displayedColumns: string[] = ['name', 'amount'];
+    displayedColumns: string[] = ['name', 'amount', 'actions'];
     dataSource = new MatTableDataSource<LineItem>();
 
     constructor(private service: BudgetService) {
@@ -57,6 +57,12 @@ export class BudgetComponent {
         const lineItem = LineItem.of(name, amount * 100);
 
         this.service.addLineItem(this.id, lineItem).subscribe(
+            _ => this.loadLineItems()
+        );
+    }
+
+    removeLineItem(lineItem: LineItem) {
+        this.service.removeLineItem(this.id, lineItem).subscribe(
             _ => this.loadLineItems()
         );
     }

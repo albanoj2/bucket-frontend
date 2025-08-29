@@ -23,8 +23,12 @@ export class BudgetService {
     }
 
     addLineItem(id: string, lineItem: LineItem): Observable<LineItem> {
-        return this.http.post<LineItemResource>(this.apiUrl(id) + '/lineItem', lineItem).pipe(
+        return this.http.post<LineItemResource>(`${this.apiUrl(id)}/lineItem`, lineItem).pipe(
             map(resource => LineItem.from(resource))
         );
+    }
+
+    removeLineItem(id: string, lineItem: LineItem): Observable<void> {
+        return this.http.delete<void>(`${this.apiUrl(id)}/lineItem/${lineItem.id}`);
     }
 }
